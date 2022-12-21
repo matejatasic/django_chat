@@ -1,5 +1,4 @@
 html, body {
-    height: 100%;
     background: rgba(13, 80, 148, 1.0);
     background: -webkit-radial-gradient(top left, rgba(13, 80, 148, 1.0), rgba(58, 156, 255, 1.0));
     background: -moz-radial-gradient(top left, rgba(13, 80, 148, 1.0), rgba(58, 156, 255, 1.0));
