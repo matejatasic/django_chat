@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "public_chat",
     "private_chat",
+    "authentication",
 ]
 
 MIDDLEWARE = [

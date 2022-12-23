@@ -20,6 +20,7 @@ from django.views.generic.base import TemplateView
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", TemplateView.as_view(template_name="home.html"), name="homepage"),
-    path("public_chat/", include("public_chat.urls")),
+    path("public_chat", include("public_chat.urls")),
     path("private_chat", include("private_chat.urls")),
+    path("", include("authentication.urls")),
 ]

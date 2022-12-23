@@ -2,7 +2,12 @@ html, body {
     background: rgba(13, 80, 148, 1.0);
     background: -webkit-radial-gradient(top left, rgba(13, 80, 148, 1.0), rgba(58, 156, 255, 1.0));
     background: -moz-radial-gradient(top left, rgba(13, 80, 148, 1.0), rgba(58, 156, 255, 1.0));
-    background: radial-gradient(to bottom right, rgba(13, 80, 148, 1.0), rgba(58, 156, 255, 1.0));;
+    background: radial-gradient(to bottom right, rgba(13, 80, 148, 1.0), rgba(58, 156, 255, 1.0));
+    min-height: 100vh;
+}
+
+body {
+    padding-bottom: 2rem;
 }
 
 .navbar-light .navbar-nav .nav-link {
@@ -24,5 +29,26 @@ html, body {
 .container p {
     font-size: 1.4rem;
     margin-top: 2rem;
+}
+
+#login-jumbotron,
+#register-jumbotron {
+    margin-top: 8rem;
+    width: 80%;
+}
+
+form label,
+form button[type=submit] {
+    font-size: 1.2rem;
+}
+
+form p a:hover {
+    text-decoration: none;
+}
+
+form input[type=email],
+form input[type=text],
+form input[type=password] {
+    font-size: 1.4rem;
 }
 
