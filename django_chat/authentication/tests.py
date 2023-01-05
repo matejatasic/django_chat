@@ -19,6 +19,23 @@ class RegistrationTests(TestCase):
 
     registration_url = reverse("register")
 
+    def test_entering_register_page_as_logged_in_user_fails(self):
+        """
+        Test entering register page as a logged in
+        user returns an error
+        """
+        payload = {
+            "username": "newUser",
+            "email": "new-user@test.com",
+            "password1": "testpass123",
+            "password2": "testpass123"
+        }
+
+        self.client.post(self.registration_url, payload)
+        response = self.client.get(self.registration_url)
+
+        self.assertEqual(response.status_code, 403)
+
     def test_registration_valid_user_success(self):
         """
         Test registration with valid payload is successfull
@@ -114,6 +131,24 @@ class LoginTests(TestCase):
 
     login_url = reverse("login")
     registration_url = reverse("register")
+    logout_url = reverse("logout")
+
+    def test_entering_login_page_as_logged_in_user_fails(self):
+        """
+        Test entering login page as a logged in
+        user returns an error
+        """
+        payload = {
+            "username": "newUser",
+            "email": "new-user@test.com",
+            "password1": "testpass123",
+            "password2": "testpass123"
+        }
+
+        self.client.post(self.registration_url, payload)
+        response = self.client.get(self.login_url)
+
+        self.assertEqual(response.status_code, 403)
 
     def test_login_with_valid_user(self):
         """
@@ -131,6 +166,7 @@ class LoginTests(TestCase):
         }
 
         self.client.post(self.registration_url, register_payload)
+        self.client.post(self.logout_url)
         response = self.client.post(self.login_url, login_payload)
 
         self.assertEqual(response.status_code, 302)
@@ -162,6 +198,16 @@ class LogoutTests(TestCase):
     logout_url = reverse("logout")
     login_url = reverse("login")
     registration_url = reverse("register")
+
+    def test_logout_unsuccessfull_when_user_anonymous(self):
+        """
+        Test logging out as anonymous user redirects
+        to the login page
+        """
+        response = self.client.post(self.logout_url)
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response["location"], self.login_url + "?next=/logout")
 
     def test_logout_successfull(self):
         """
