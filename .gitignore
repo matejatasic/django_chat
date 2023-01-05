@@ -10,3 +10,6 @@ __pycache__/
 # Provision
 /.vagrant
 ubuntu-bionic-18.04-cloudimg-console.log
+
+migrations/
+!migrations/__init__.py
