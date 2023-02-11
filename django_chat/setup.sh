@@ -12,6 +12,11 @@ sudo systemctl start postgresql.service
 sudo su postgres -c "psql -c \"CREATE ROLE vagrant SUPERUSER LOGIN PASSWORD 'vagrant'\" "
 sudo su postgres -c "createdb django_chat_db"
 
+# install redis and start it
+sudo apt -y install redis-server
+sudo systemctl restart redis-server
+
 # pip installs
 pip3 install django
+pip3 install --upgrade pip
 pip3 install -r /vagrant/django_chat/requirements.txt

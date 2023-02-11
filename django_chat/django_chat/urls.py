@@ -20,7 +20,17 @@ from django.views.generic.base import TemplateView
 from django.conf.urls.static import static
 from django.conf import settings
 
+from public_chat.api import PublicChatModelViewSet
+from rest_framework.routers import DefaultRouter
+
+
+router = DefaultRouter()
+router.register(r"public_chat", PublicChatModelViewSet, basename="public-chat-api")
+
+app_name = "django_chat"
+
 urlpatterns = [
+    path("api/", include(router.urls)),
     path("admin/", admin.site.urls),
     path("", TemplateView.as_view(template_name="home.html"), name="homepage"),
     path("public_chat", include("public_chat.urls")),
