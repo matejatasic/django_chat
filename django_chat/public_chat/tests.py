@@ -24,7 +24,11 @@ class PublicChatTests(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response["location"], reverse("login") + "?next=/public_chat")
 
-class PublicChatApi(TestCase):
+class PublicChatApiTests(TestCase):
+    """
+    Test public chat API functionality
+    """
+
     public_chat_api_url = reverse("public-chat-api-list")
 
     def test_create_message_with_valid_data_successful(self):

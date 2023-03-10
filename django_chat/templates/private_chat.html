@@ -12,90 +12,47 @@
             <div class="row mt-5">
                 <div class="col-md-3" id="chat-sidebar">
                     <div class="row">
-                        <div class="col-md-12 d-flex">
-                            <div class="d-flex justify-content-center align-items-center user-avatar-div">
-                                <img src="{% static 'images/default-profile-image.png' %}" alt="default-profile-image">
+                        {% for user in users %}
+                            <div class="col-md-12 d-flex">
+                                <div class="d-flex justify-content-center align-items-center user-avatar-div">
+                                    <img src="{% static 'images/default-profile-image.png' %}" alt="default-profile-image">
+                                </div>
+                                <div class="username-div">
+                                    <a href="#">
+                                        <p class="user user-{{ user.id }}">{{ user.username }}</p>
+                                    </a>
+                                </div>
                             </div>
-                            <div class="username-div">
-                                <p><a href="#">John Doe</a></p>
-                            </div>
-                        </div>
-                        <div class="col-md-12 d-flex">
-                            <div class="d-flex justify-content-center align-items-center user-avatar-div">
-                                <img src="{% static 'images/default-profile-image.png' %}" alt="default-profile-image">
-                            </div>
-                            <div class="username-div">
-                                <p><a href="#">Harry Potter</a></p>
-                            </div>
-                        </div>
-                        <div class="col-md-12 d-flex">
-                            <div class="d-flex justify-content-center align-items-center user-avatar-div">
-                                <img src="{% static 'images/default-profile-image.png' %}" alt="default-profile-image">
-                            </div>
-                            <div class="username-div">
-                                <p><a href="#">Ron Weasley</a></p>
-                            </div>
-                        </div>
-                        <div class="col-md-12 d-flex">
-                            <div class="d-flex justify-content-center align-items-center user-avatar-div">
-                                <img src="{% static 'images/default-profile-image.png' %}" alt="default-profile-image">
-                            </div>
-                            <div class="username-div">
-                                <p><a href="#">Hermione Granger</a></p>
-                            </div>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
                 <div class="col-md-9" id="chat-box">
-                    <div class="row">
-                        <div class="col-md-12 d-flex message-row other-user-message-row my-3">
-                            <div class="d-flex justify-content-center align-items-center user-avatar-div">
-                                <img src="{% static 'images/default-profile-image.png' %}" alt="default-profile-image">
-                            </div>
-                            <div class="message-div">
-                                <div class="message-box">
-                                    <p>
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore asperiores qui itaque iste perspiciatis. Corrupti sequi obcaecati numquam labore animi, cupiditate odio voluptates doloremque fuga ipsum. Velit tempore officiis expedita?
-                                    </p>
-                                </div>
-                                <small class="float-right my-2">19/12/2022 15:35</small>
-                            </div>
-                        </div>
-                        <div class="col-md-12 d-flex message-row my-3 loggedin-user-message-row">
-                            <div class="message-div">
-                                <div class="message-box">
-                                    <p>
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum assumenda commodi nulla mollitia amet reiciendis distinctio molestiae numquam veniam dicta quidem hic, repellat necessitatibus blanditiis consequuntur molestias, illum iste, pariatur saepe impedit. Sint, ipsum dicta id ad rem esse nulla possimus magnam molestias iure doloribus illum consectetur molestiae tempora facere ea officiis! Provident sunt, odit quod magnam suscipit voluptate, dolorem iusto assumenda nulla facere a aliquid nam tempora, consectetur perferendis doloremque quos reiciendis. Fugit eius tenetur quas odio laudantium necessitatibus porro dignissimos. Quos cupiditate sed velit odio unde tenetur nemo atque beatae. Fugit rem vel molestiae, commodi harum mollitia nisi?
-                                    </p>
-                                </div>
-                                <small class="float-right my-2">19/12/2022 15:35</small>
-                            </div>
-                            <div class="d-flex justify-content-center align-items-center user-avatar-div">
-                                <img src="{% static 'images/default-profile-image.png' %}" alt="default-profile-image">
-                            </div>
-                        </div>
-                        <div class="col-md-12 d-flex message-row my-3 other-user-message-row my-3">
-                            <div class="d-flex justify-content-center align-items-center user-avatar-div">
-                                <img src="{% static 'images/default-profile-image.png' %}" alt="default-profile-image">
-                            </div>
-                            <div class="message-div">
-                                <div class="message-box">
-                                    <p>
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore asperiores qui itaque iste perspiciatis. Corrupti sequi obcaecati numquam labore animi, cupiditate odio voluptates doloremque fuga ipsum. Velit tempore officiis expedita?
-                                    </p>
-                                </div>
-                                <small class="float-right my-2">19/12/2022 15:35</small>
-                            </div>
-                        </div>
+                    <div class="row" id="messages-div">
+
                     </div>
                 </div>
                 <div class="col-md-12 d-flex" id="chat-form">
-                    <form>
-                        <textarea name="message" class="form-control"></textarea>
+                    <form id="private-chat-form">
+                        <div id="warning-div"></div>
+                        {% csrf_token %}
+
+                        <textarea name="message" id="message" class="form-control"></textarea>
                         <input class="btn btn-primary mt-3 float-right" type="submit" value="Send">
                     </form>
                 </div>
             </div>
        </div>
     </div>
+{% endblock  %}
+
+{% block extra_js %}
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        const profileImage = "{% static 'images/default-profile-image.png' %}";
+        const privateChatApiUrl = "{% url 'private-chat-api-list' %}";
+        const loggedinUserId = "{{ user.id }}";
+        let otherUserId = "{{ users.last.id }}";
+        let otherUserUsername = "{{ users.last.username }}";
+    </script>
+    <script src="{% static 'javascript/private_chat.js' %}"></script>
 {% endblock  %}

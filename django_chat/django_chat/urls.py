@@ -21,11 +21,13 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 from public_chat.api import PublicChatModelViewSet
+from private_chat.api import PrivateChatModelViewSet
 from rest_framework.routers import DefaultRouter
 
 
 router = DefaultRouter()
 router.register(r"public_chat", PublicChatModelViewSet, basename="public-chat-api")
+router.register(r"private-chat", PrivateChatModelViewSet, basename="private-chat-api")
 
 app_name = "django_chat"
 

@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import index
+from .views import PrivateChatView
 
 urlpatterns = [
-    path("", index, name="private_chat"),
+    path("", PrivateChatView.as_view(), name="private_chat"),
 ]

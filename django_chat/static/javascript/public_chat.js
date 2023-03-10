@@ -16,8 +16,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function getMessages() {
         axios.get(publicChatApiUrl)
-        .then((res) => {
-            showMessages(res.data);
+        .then((response) => {
+            showMessages(response.data);
         })
         .catch((error) => {
             showWarning("There was an error while trying to fetch the messages!");
