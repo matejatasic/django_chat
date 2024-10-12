@@ -18,8 +18,8 @@ curl -fsSL https://packages.redis.io/gpg | sudo gpg --dearmor -o /usr/share/keyr
 sudo chmod 644 /usr/share/keyrings/redis-archive-keyring.gpg
 echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/redis.list
 sudo apt-get update
-sudo apt-get install redis
-sudo systemctl start redis
+sudo apt-get -y install redis
+sudo systemctl start redis-server
 
 # pip installs
 pip3 install django
