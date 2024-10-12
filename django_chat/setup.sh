@@ -25,3 +25,7 @@ sudo systemctl start redis
 pip3 install django
 pip3 install --upgrade pip
 pip3 install -r /vagrant/django_chat/requirements.txt
+
+# create migrations and migrate
+python3 /vagrant/django_chat/manage.py makemigrations
+python3 /vagrant/django_chat/manage.py migrate
